@@ -1,83 +1,671 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Hasala Marakkalage – Resume</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasala Marakkalage — AI Solutions Architect</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --bg-light: #fafafa;
+            --bg-dark: #0f0f23;
+            --card-light: rgba(255, 255, 255, 0.95);
+            --card-dark: rgba(30, 30, 60, 0.95);
+            --text-light: #374151;
+            --text-dark: #f3f4f6;
+            --border: rgba(255, 255, 255, 0.1);
+            --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            background: var(--bg-light);
+            color: var(--text-light);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-x: hidden;
+        }
+
+        body.dark {
+            background: var(--bg-dark);
+            color: var(--text-dark);
+        }
+
+        /* Animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(245, 158, 11, 0.1) 0%, transparent 50%);
+            z-index: -1;
+            animation: backgroundShift 20s ease-in-out infinite;
+        }
+
+        @keyframes backgroundShift {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
+        }
+
+        /* Dark mode toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--card-light);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        body.dark .theme-toggle {
+            background: var(--card-dark);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 120px 0 80px;
+            position: relative;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            animation: slideInUp 0.8s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-weight: 300;
+            margin-bottom: 2rem;
+            opacity: 0.8;
+            animation: slideInUp 0.8s ease-out 0.2s both;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+            animation: slideInUp 0.8s ease-out 0.4s both;
+        }
+
+        .social-link {
+            padding: 12px 24px;
+            background: var(--card-light);
+            border-radius: 50px;
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark .social-link {
+            background: var(--card-dark);
+            color: var(--text-dark);
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Grid layout */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-light);
+            border-radius: 20px;
+            padding: 2.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.dark .card {
+            background: var(--card-dark);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 35px 65px -12px rgba(0, 0, 0, 0.35);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--gradient);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        /* Experience timeline */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 1px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2.5rem;
+            padding-left: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            background: var(--primary);
+            border-radius: 50%;
+            border: 3px solid var(--card-light);
+            transition: all 0.3s ease;
+        }
+
+        body.dark .timeline-item::before {
+            border-color: var(--card-dark);
+        }
+
+        .timeline-item:hover::before {
+            transform: scale(1.3);
+            background: var(--secondary);
+        }
+
+        .job-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .company {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .period {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            margin-bottom: 1rem;
+        }
+
+        .achievements {
+            list-style: none;
+        }
+
+        .achievements li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.8rem;
+            line-height: 1.6;
+        }
+
+        .achievements li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        /* Skills grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-category {
+            padding: 1.5rem;
+            background: rgba(99, 102, 241, 0.05);
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        body.dark .skill-category {
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .skill-category:hover {
+            transform: translateX(5px);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .skill-title {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        /* Awards */
+        .award {
+            padding: 1.5rem;
+            background: rgba(245, 158, 11, 0.05);
+            border-radius: 12px;
+            border-left: 4px solid var(--accent);
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        body.dark .award {
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .award:hover {
+            transform: translateX(5px);
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .award-title {
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Download button */
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: var(--gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            margin: 2rem auto;
+            display: block;
+            width: fit-content;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .header {
+                padding: 80px 0 60px;
+            }
+            
+            .social-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .card {
+                padding: 2rem;
+            }
+            
+            .theme-toggle {
+                top: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+            }
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient);
+            transform-origin: left;
+            transform: scaleX(0);
+            transition: transform 0.1s ease;
+            z-index: 1000;
+        }
+    </style>
 </head>
 <body>
-  <!-- Dark mode toggle -->
-  <button id="dark-mode-toggle">🌙</button>  
-  <h1>Hasala Marakkalage, PhD</h1>
-  <h2>Data Scientist | AI Solutions Architect | Researcher</h2>
+    <div class="scroll-indicator"></div>
+    
+    <button class="theme-toggle" id="themeToggle">🌙</button>
+    
+    <div class="container">
+        <header class="header">
+            <h1 class="hero-title">Hasala Marakkalage</h1>
+            <h2 class="hero-subtitle">PhD • Data Scientist • AI Solutions Architect • Researcher</h2>
+            
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/hasala" target="_blank" class="social-link">
+                    LinkedIn
+                </a>
+                <a href="https://scholar.google.com/citations?user=RyieI3IAAAAJ&hl=en" target="_blank" class="social-link">
+                    Google Scholar
+                </a>
+            </div>
+        </header>
 
-  <!-- Social links -->
-  <p class="social-links">
-    <a href="https://www.linkedin.com/in/hasala" target="_blank">LinkedIn</a> |
-    <a href="https://scholar.google.com/citations?user=RyieI3IAAAAJ&hl=en" target="_blank">Google Scholar</a>
-  </p>
-  <section>
-    <h3>Experience</h3>
-    <p><b>NCS Pte. Ltd, Singapore</b> – Research Scientist (May 2022 – Present)</p>
-    <ul>
-      <li>Led the development of reusable Generative AI assets for a major telecom client, serving as the primary point of contact, gathering business requirements, translating them into technical specifications, coordinating with the development team, and ensuring successful delivery of production-ready AI workflows.</li>
-      <li>Designed and deployed Agentic AI orchestration layer enabling natural language interaction with ERP systems (Procurement, Sales, and Project Finance).</li>
-      <li>Core Developer for NEXTgpt Generative AI accelerator platform, supporting LLMs, retrievers, and RAG pipelines, reducing AI use case deployment time by 40%.</li>
-      <li>Delivered enterprise-grade solutions including summarization, document Q&A, agentic workflows, and scoring systems, accelerating client adoption of Generative AI.</li>
-    </ul>
-    <p><b>Vulcan AI Pte. Ltd, Singapore</b> – Senior Data Scientist (Jun 2021 – May 2022)</p>
-    <ul>
-      <li>Developed machine learning models for activity classification and health monitoring using smart wearables in environmental services and construction.</li>
-      <li>Improved worker safety and productivity by 20% through real-time monitoring solutions.</li>
-      <li>Contributed to preparation of RFP responses, providing technical insights and AI solution proposals to support business development initiatives.</li>
-    </ul>
-    <p><b>Axilix Pvt. Ltd, Sri Lanka</b> – Lead Engineer (Sep 2014 – Aug 2015)</p>
-    <ul>
-      <li>Delivered software and hardware solutions for embedded systems and industrial automation.</li>
-      <li>Enhanced system reliability and uptime by optimizing firmware and control logic.</li>
-      <li>Applied signal processing and control system expertise to industrial use cases.</li>
-    </ul>
-    <p><b>Dialog Research Laboratory, Sri Lanka</b> – Research Engineer (Sep 2014 – Aug 2015)</p>
-    <ul>
-      <li>Led R&D of mobile and sensor fusion applications for Dialog Axiata, a leading telecom operator.</li>
-      <li>Developed and tested signal processing-based mobile applications to enhance platform capabilities.</li>
-      <li>Contributed to innovation projects bridging research and industry, supporting next-generation telecom services.</li>
-    </ul>
-  </section>
+        <div class="grid">
+            <div class="card fade-in">
+                <h3 class="card-title">
+                    <span class="card-icon">💼</span>
+                    Experience
+                </h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="job-title">Research Scientist</div>
+                        <div class="company">NCS Pte. Ltd, Singapore</div>
+                        <div class="period">May 2022 — Present</div>
+                        <ul class="achievements">
+                            <li>Led development of reusable Generative AI assets for major telecom client, serving as primary point of contact and ensuring successful delivery of production-ready AI workflows</li>
+                            <li>Designed and deployed Agentic AI orchestration layer enabling natural language interaction with ERP systems (Procurement, Sales, and Project Finance)</li>
+                            <li>Core Developer for NEXTgpt Generative AI accelerator platform, reducing AI use case deployment time by 40%</li>
+                            <li>Delivered enterprise-grade solutions including summarization, document Q&A, agentic workflows, and scoring systems</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="job-title">Senior Data Scientist</div>
+                        <div class="company">Vulcan AI Pte. Ltd, Singapore</div>
+                        <div class="period">Jun 2021 — May 2022</div>
+                        <ul class="achievements">
+                            <li>Developed ML models for activity classification and health monitoring using smart wearables</li>
+                            <li>Improved worker safety and productivity by 20% through real-time monitoring solutions</li>
+                            <li>Contributed to RFP responses with technical insights and AI solution proposals</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="job-title">Lead Engineer & Research Engineer</div>
+                        <div class="company">Axilix Pvt. Ltd & Dialog Research Laboratory, Sri Lanka</div>
+                        <div class="period">Sep 2014 — Aug 2015</div>
+                        <ul class="achievements">
+                            <li>Delivered software and hardware solutions for embedded systems and industrial automation</li>
+                            <li>Led R&D of mobile and sensor fusion applications for Dialog Axiata telecom operator</li>
+                            <li>Enhanced system reliability through optimized firmware and control logic</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
-  <section>
-    <h3>Education</h3>
-    <p>PhD in AI & IoT – Singapore University of Technology and Design</p>
-    <p>B.Eng in Electronic Engineering – Sheffield Hallam University</p>
-  </section>
+            <div class="card fade-in">
+                <h3 class="card-title">
+                    <span class="card-icon">🎓</span>
+                    Education
+                </h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="job-title">PhD in AI & IoT</div>
+                        <div class="company">Singapore University of Technology and Design</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="job-title">B.Eng in Electronic Engineering</div>
+                        <div class="company">Sheffield Hallam University</div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-  <section>
-    <h3>Skills</h3>
-    <p><b>Agentic AI:</b> LangChain, LangGraph, AutoGen, DSPy, RAG, MCP, VLMs</p>
-    <p><b>MLOps & LLMOps:</b> MLflow, vLLM, designing scalable pipelines, deployment, and monitoring.</p> 
-    <p><b>Programming & Engineeering:</b> Python, Java, applied AI engineering and systems integration.</p>
-    <p><b>Leadership & Mentorship:</b> Led AI teams, mentored junior engineers and scientists, and drove delivery of production-ready AI solutions.</p>  
-    <p><b>Client & Stakeholder Engagement:</b> Collaborated with enterprise clients to gather requirements, present solutions, and align AI deployments with business objectives.</p>
-    <p><b>Enterprise AI Applications:</b> SAP ERP integration for Procurement, Project Finance insights, Document Q&A, Summarization, and Workflow Orchestration</p>
-  </section>
+        <div class="card fade-in">
+            <h3 class="card-title">
+                <span class="card-icon">⚡</span>
+                Skills & Expertise
+            </h3>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <div class="skill-title">Agentic AI</div>
+                    <p>LangChain, LangGraph, AutoGen, DSPy, RAG, MCP, VLMs</p>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-title">MLOps & LLMOps</div>
+                    <p>MLflow, vLLM, designing scalable pipelines, deployment, and monitoring</p>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-title">Programming & Engineering</div>
+                    <p>Python, Java, applied AI engineering and systems integration</p>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-title">Leadership & Mentorship</div>
+                    <p>Led AI teams, mentored junior engineers, drove delivery of production-ready solutions</p>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-title">Client & Stakeholder Engagement</div>
+                    <p>Enterprise client collaboration, requirements gathering, solution presentation</p>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-title">Enterprise AI Applications</div>
+                    <p>SAP ERP integration, Project Finance insights, Document Q&A, Workflow Orchestration</p>
+                </div>
+            </div>
+        </div>
 
-  <section>
-    <h3>Awards</h3>
-    <p>NCS Achievement Awards (Best Innovation) – GOLD | Sep 2023</p>
-    <p>SUTD PhD Fellowship | Jan 2016</p>
-    <p>Changi Airport Group Award for Outstanding Research Presentation | Jan 2016</p>
-    <p>ST Electronics Award for Outstanding Research Presentation | Jan 2016</p>
-  </section>
+        <div class="card fade-in">
+            <h3 class="card-title">
+                <span class="card-icon">🏆</span>
+                Awards & Recognition
+            </h3>
+            <div class="award">
+                <div class="award-title">NCS Achievement Awards (Best Innovation) — GOLD</div>
+                <div class="period">Sep 2023</div>
+            </div>
+            <div class="award">
+                <div class="award-title">SUTD PhD Fellowship</div>
+                <div class="period">Jan 2016</div>
+            </div>
+            <div class="award">
+                <div class="award-title">Changi Airport Group Award for Outstanding Research Presentation</div>
+                <div class="period">Jan 2016</div>
+            </div>
+            <div class="award">
+                <div class="award-title">ST Electronics Award for Outstanding Research Presentation</div>
+                <div class="period">Jan 2016</div>
+            </div>
+        </div>
 
-  <p><a href="Resume.pdf" target="_blank">Download PDF Resume</a></p>
-  <!-- Dark mode script -->
-  <script>
-    const toggleBtn = document.getElementById("dark-mode-toggle");
-    toggleBtn.addEventListener("click", () => {
-      document.body.classList.toggle("dark-mode");
-      toggleBtn.textContent = document.body.classList.contains("dark-mode") ? "☀️" : "🌙";
-    });
-  </script>
+        <a href="Resume.pdf" target="_blank" class="download-btn">
+            📄 Download PDF Resume
+        </a>
+    </div>
 
+    <script>
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark');
+            themeToggle.textContent = body.classList.contains('dark') ? '☀️' : '🌙';
+            
+            // Save preference
+            localStorage.setItem('dark-mode', body.classList.contains('dark'));
+        });
+        
+        // Load saved theme
+        if (localStorage.getItem('dark-mode') === 'true') {
+            body.classList.add('dark');
+            themeToggle.textContent = '☀️';
+        }
+        
+        // Scroll indicator
+        const scrollIndicator = document.querySelector('.scroll-indicator');
+        
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const maxScroll = document.body.scrollHeight - window.innerHeight;
+            const scrollProgress = scrolled / maxScroll;
+            scrollIndicator.style.transform = `scaleX(${scrollProgress})`;
+        });
+        
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Smooth scroll for any internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Add subtle parallax effect to background
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const bg = document.querySelector('body::before');
+            if (bg) {
+                bg.style.transform = `translateY(${scrolled * 0.1}px)`;
+            }
+        });
+    </script>
 </body>
 </html>
